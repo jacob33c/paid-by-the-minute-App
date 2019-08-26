@@ -29,7 +29,8 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     func toggleTimer(on: Bool, increment: Float){
         if on == false{
-            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (timer) in
+                timer.invalidate()
+                timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { (timer) in
                 let twoDecimalPlaces = String(format: "%.2f", self.total)
                 self.moneyLabel.text = "$ \(twoDecimalPlaces)"
                 self.total += increment
@@ -42,17 +43,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
             })
         }
         else{
-            self.startButton.backgroundColor = UIColor.green
-            self.startButton.setTitle("Start", for: .normal)
-            timer.invalidate()
-            self.timerOn = false
-            self.hourlyRate.isHidden = false
+                timer.invalidate()
+                self.startButton.backgroundColor = UIColor.green
+                self.startButton.setTitle("Start", for: .normal)
+                self.timerOn = false
+                self.hourlyRate.isHidden = false
         }
     }
     
     
     @IBAction func startButtonPressed(_ sender: Any) {
-        
         if let rate = hourlyRate.text{
             if let rateNum = Float(rate){
                 hourlyRate.resignFirstResponder()
@@ -62,20 +62,18 @@ class ViewController: UIViewController, UITextFieldDelegate {
                 toggleTimer(on: timerOn, increment: increment)
             }
         }
-    
     }
     
     @IBAction func restartButtonPressed(_ sender: Any) {
-        self.total = 0.00
-        self.moneyLabel.text = "$0.00"
-        self.timerOn = false
-        self.startButton.backgroundColor = UIColor.green
-        self.startButton.setTitle("Start", for: .normal)
-        timer.invalidate()
-        self.timerOn = false
-        self.hourlyRate.text = ""
-        self.hourlyRate.isHidden = false
-
+            timer.invalidate()
+            self.total = 0.00
+            self.moneyLabel.text = "$0.00"
+            self.timerOn = false
+            self.startButton.backgroundColor = UIColor.green
+            self.startButton.setTitle("Start", for: .normal)
+            self.hourlyRate.text = ""
+            self.hourlyRate.isHidden = false
+        
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
